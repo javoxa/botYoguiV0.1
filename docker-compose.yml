@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Base de Datos
+  db:
+    image: postgres:15
+    container_name: unsa_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Esto carga tu SQL automáticamente al iniciar
+      - ./database/schema:/docker-entrypoint-initdb.d
+
+  # El Bot de Telegram
+  bot:
+    build: .
+    container_name: unsa_bot
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    volumes:
+      - ./frontend:/app/frontend
+      - ./database:/app/database
+
+volumes:
+  postgres_data:
