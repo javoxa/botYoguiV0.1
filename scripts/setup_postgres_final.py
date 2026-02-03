@@ -13,7 +13,7 @@ async def setup_postgres():
 
     # Configuración de conexión
     db_config = {
-        "host": "localhost",
+        "host": os.getenv("DB_HOST","localhost"),#poner la IP del CPU
         "database": "unsa_knowledge_db",
         "user": "unsa_admin",
         "password": "unsa_password"
