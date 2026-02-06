@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 class ResponseMode(Enum):
     DIRECT = "direct"
@@ -15,3 +15,4 @@ class SearchResult:
     faculty: str
     score: float
     keywords: List[str]
+    description: Optional[str] = None # Puede ser None si no existe en la DB
